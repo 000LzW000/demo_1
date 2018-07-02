@@ -1,0 +1,49 @@
+Table: t_category
+---------+-------------+------+-----+---------+---------
+ Field   | Type        | Null | Key | Default | Remarks 
+---------+-------------+------+-----+---------+---------
+ id      | INT(10)     | NO   | PRI |         | 板块ID    
+ name    | VARCHAR(50) | YES  |     |         | 板块名称    
+ deleted | BIT         | YES  |     | 0       | 删除标志    
+---------+-------------+------+-----+---------+---------
+
+Table: t_reply
+----------+---------------+------+-----+-------------------+---------
+ Field    | Type          | Null | Key | Default           | Remarks 
+----------+---------------+------+-----+-------------------+---------
+ id       | INT(10)       | NO   | PRI |                   | 回帖ID    
+ user_id  | INT(10)       | NO   |     |                   | 回帖发布用户ID
+ topic_id | INT(10)       | NO   |     |                   | 主题ID    
+ content  | TEXT(65535)   | YES  |     |                   | 回帖内容    
+ pub_date | TIMESTAMP(19) | NO   |     | CURRENT_TIMESTAMP | 回帖时间    
+ deleted  | BIT           | NO   | PRI | 0                 | 删帖标志    
+----------+---------------+------+-----+-------------------+---------
+
+Table: t_topic
+-----------------+---------------+------+-----+-------------------+---------
+ Field           | Type          | Null | Key | Default           | Remarks 
+-----------------+---------------+------+-----+-------------------+---------
+ id              | INT(10)       | NO   | PRI |                   | 主题ID    
+ user_id         | INT(10)       | YES  |     |                   | 主题发布用户ID
+ category_id     | INT(10)       | YES  |     |                   | 板块ID    
+ title           | VARCHAR(255)  | YES  |     |                   | 主题名称    
+ content         | TEXT(65535)   | YES  |     |                   | 主题内容    
+ old_reply_count | INT(10)       | YES  |     | 0                 | 回复数量    
+ pub_date        | TIMESTAMP(19) | NO   |     | CURRENT_TIMESTAMP | 主题发布时间  
+ deleted         | BIT           | YES  |     | 0                 | 删除标志    
+-----------------+---------------+------+-----+-------------------+---------
+
+Table: t_user
+----------+----------------------+------+-----+---------+---------
+ Field    | Type                 | Null | Key | Default | Remarks 
+----------+----------------------+------+-----+---------+---------
+ id       | INT(10)              | NO   | PRI |         | 用户ID    
+ username | VARCHAR(50)          | YES  |     |         | 用户名     
+ password | VARCHAR(100)         | YES  |     |         | 密码      
+ nickname | VARCHAR(100)         | YES  |     |         | 昵称      
+ sex      | VARCHAR(2)           | YES  |     | 男       | 性别      
+ avatar   | LONGBLOB(2147483647) | YES  |     |         | 头像      
+ email    | VARCHAR(100)         | YES  |     |         | 邮箱      
+ admin    | BIT                  | YES  |     | 0       | 是否是管理员  
+----------+----------------------+------+-----+---------+---------
+

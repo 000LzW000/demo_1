@@ -1,0 +1,50 @@
+#检查登录用户
+#sql("checkLoginUser")
+SELECT * FROM t_user WHERE username = ? AND password = ?
+#end
+#sql("getTopicListByCategoryId")
+    SELECT
+    	t_topic.*, t_user.nickname
+    FROM
+    	t_topic
+    INNER JOIN t_user ON t_topic.user_id = t_user.id
+    WHERE
+    	category_id = ?
+    ORDER BY
+    	pub_date DESC
+#end
+
+#获得所有的板块
+#sql("getAllCategories")
+SELECT * FROM t_category
+#end
+
+###获得热帖
+#sql("getHotTopics")
+SELECT
+	t_topic.*, IFNULL(t.reply_count, 0) AS reply_count,
+	t_category. NAME AS category_name
+FROM
+	t_topic
+LEFT JOIN (
+	SELECT
+		topic_id,
+		COUNT(id) AS reply_count
+	FROM
+		t_reply
+	GROUP BY
+		topic_id
+) AS T ON t_topic.id = T.topic_id
+INNER JOIN t_category ON t_topic.category_id = t_category.id
+ORDER BY
+	reply_count DESC
+LIMIT 1,25
+#end
+
+#回复内容信息
+#sql("getRepliesByTopicId")
+SELECT t_reply.*, t_user.`nickname` AS user_nickname ,t_user.`avatar` AS user_avatar
+FROM t_reply
+INNER JOIN t_user ON t_reply.`user_id`=t_user.`id`
+WHERE  topic_id = ?
+#end
